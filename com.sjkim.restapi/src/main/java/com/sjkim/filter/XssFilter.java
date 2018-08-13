@@ -21,7 +21,8 @@ public class XssFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
+		// Rest Api에는 XssFilter가 필요 업으므로 주석 처리
+//		chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
 	}
 
 	@Override
