@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 
 @WebFilter(urlPatterns = "/*")
 public class XssFilter implements Filter {
@@ -20,7 +21,7 @@ public class XssFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		chain.doFilter(request, response);
+		chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
 	}
 
 	@Override
