@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjkim.repository.CardPointDao">
+	<resultMap id="resultMapCardPointVo" type="CardPointVo">
+		<result property="cardFraction" column="CARD_FRACTION" />
+		<result property="appPercent" column="APP_PERCENT" />
+	</resultMap>
+
+	<insert id="insertCardPoint" parameterType="PostCardPointDto">
+		INSERT
+		INTO
+		SYS_CARD_POINT(CARD_FRACTION, APP_PERCENT)
+		VALUES(#{cardFraction},
+		#{appPercent})
+	</insert>
+
+	<select id="selectCardPointAll" parameterType="GetCardPointDto"
+		resultMap="resultMapCardPointVo">
+		SELECT *
+		FROM
+		SYS_CARD_POINT
+	</select>
+
+	<select id="selectCardPointByCardFraction"
+		parameterType="String" resultMap="resultMapCardPointVo">
+		SELECT *
+		FROM SYS_CARD_POINT
+		WHERE
+		CARD_FRACTION=#{cardFraction}
+	</select>
+
+	<update id="updateCardPoint" parameterType="PutCardPointDto">
+		UPDATE SYS_CARD_POINT
+		SET APP_PERCENT=#{appPercent}
+		WHERE CARD_FRACTION=#{cardFraction}
+	</update>
+
+	<delete id="deleteCardPoint" parameterType="String">
+		DELETE
+		FROM
+		SYS_CARD_POINT
+		WHERE CARD_FRACTION=#{cardFraction}
+	</delete>
+</mapper>

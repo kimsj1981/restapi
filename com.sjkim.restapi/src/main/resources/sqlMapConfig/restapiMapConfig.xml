@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<package name="com.sjkim.dto" />
+		<package name="com.sjkim.vo" />
+	</typeAliases>
+
+	<plugins>
+		<plugin
+			interceptor="com.sjkim.interceptor.MybatisPagingInterceptor" />
+	</plugins>
+
+	<mappers>
+		<mapper resource="sqlMap/cardPointMapper.xml" />
+		<mapper resource="sqlMap/errorLogMapper.xml" />
+	</mappers>
+
+</configuration>

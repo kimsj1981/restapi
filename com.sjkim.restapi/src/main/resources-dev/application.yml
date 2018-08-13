@@ -1,0 +1,47 @@
+# server config
+server:
+  port: 9000
+  servlet:
+    context-path: /
+
+# spring config
+spring:
+  # using h2 dbms
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+
+  # active profile
+  profiles:
+    active: dev
+
+  # h2 conole
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # using ehcache
+#  cache:
+#    ehcache:
+#      config: classpath:ehcache/ehcache.xml
+
+  # using redis
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  # char encoding filter
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+ 
+# mybatis config
+mybatis:
+  config-location: classpath:sqlMapConfig/restapiMapConfig.xml

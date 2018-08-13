@@ -1,0 +1,57 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.sjkim'
+version = '0.0.1'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url "https://code.lds.org/nexus/content/groups/main-repo" }
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter-test:1.3.2')
+	compile('com.oracle:ojdbc6:11.2.0.3')
+	compile('com.h2database:h2')
+	compile('io.springfox:springfox-swagger2:2.8.0')
+	compile('io.springfox:springfox-swagger-ui:2.8.0')
+	compile('com.google.code.gson:gson:2.8.2')
+	compile('org.apache.commons:commons-lang3')
+	compile('net.sf.ehcache:ehcache:2.10.3')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+final String DEFAULT_PROFILE = 'local'
+allprojects {
+	if (!project.hasProperty('profile') || !profile) {
+		ext.profile = DEFAULT_PROFILE
+	}
+
+	sourceSets {
+		main {
+			resources {
+				srcDir "src/main/resources-${profile}"
+			}
+		}
+	}
+}
