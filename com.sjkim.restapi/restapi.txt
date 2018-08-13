@@ -1,4 +1,4 @@
-1. ÇÁ·¹ÀÓ¿öÅ© : Spring Boot 2.0.4(Spring 5.0.6)
+ï»¿1. í”„ë ˆì„ì›Œí¬ : Spring Boot 2.0.4(Spring 5.0.6)
  1) Group
   com.sjkim
 
@@ -8,14 +8,14 @@
  3) Package
   com.sjkim
 
-2. ¼Ò½ºÄÚµå ¹öÀü°ü¸®
+2. ì†ŒìŠ¤ì½”ë“œ ë²„ì „ê´€ë¦¬
  1) github
   kimsj1981 / kimsj1981@nate.com
  2) git
   https://github.com/kimsj1981/restapi.git
 
-3. H2 DB ¼³Á¤
- 1) datasource ¼³Á¤
+3. H2 DB ì„¤ì •
+ 1) datasource ì„¤ì •
 spring:
   datasource:
     driver-class-name: org.h2.Driver
@@ -23,7 +23,7 @@ spring:
     username: sa
     password:  
 
- 2) console »ç¿ë ¼³Á¤ -> http://localhost:8080/h2-console
+ 2) console ì‚¬ìš© ì„¤ì • -> http://localhost:8080/h2-console
 spring:
   h2:
     console:
@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS SYS_CARD_POINT
 	PRIMARY KEY (CARD_FRACTION)
 );
 
-COMMENT ON TABLE SYS_CARD_POINT IS 'Ä«µå Æ÷ÀÎÆ® Àû¸³À²';
-COMMENT ON COLUMN SYS_CARD_POINT.CARD_FRACTION IS '±¸ºĞ';
-COMMENT ON COLUMN SYS_CARD_POINT.APP_PERCENT IS 'Ãß°¡ Àû¸³À²';
+COMMENT ON TABLE SYS_CARD_POINT IS 'ì¹´ë“œ í¬ì¸íŠ¸ ì ë¦½ìœ¨';
+COMMENT ON COLUMN SYS_CARD_POINT.CARD_FRACTION IS 'êµ¬ë¶„';
+COMMENT ON COLUMN SYS_CARD_POINT.APP_PERCENT IS 'ì¶”ê°€ ì ë¦½ìœ¨';
 
 CREATE TABLE SYS_REST_ERROR_LOG
 (
@@ -50,10 +50,10 @@ CREATE TABLE SYS_REST_ERROR_LOG
 	PRIMARY KEY (ERR_SQ)
 );
 
-COMMENT ON TABLE SYS_REST_ERROR_LOG IS 'RESTAPI ¿¡·¯ ·Î±ë';
-COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_SQ IS '¿¡·¯ ½ÃÄö½º¹øÈ£';
-COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_DT IS '¿¡·¯ ¹ß»ıÀÏ½Ã';
-COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_CD IS '¿¡·¯ ÄÚµå';
+COMMENT ON TABLE SYS_REST_ERROR_LOG IS 'RESTAPI ì—ëŸ¬ ë¡œê¹…';
+COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_SQ IS 'ì—ëŸ¬ ì‹œí€€ìŠ¤ë²ˆí˜¸';
+COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_DT IS 'ì—ëŸ¬ ë°œìƒì¼ì‹œ';
+COMMENT ON COLUMN SYS_REST_ERROR_LOG.ERR_CD IS 'ì—ëŸ¬ ì½”ë“œ';
 
 CREATE SEQUENCE SEQ_REST_ERROR;
 
@@ -78,76 +78,76 @@ INSERT
 INTO SYS_CARD_POINT(CARD_FRACTION, APP_PERCENT)
 VALUES ('11', 0.005);
 
-4. È¯°æº° resource ºĞ¸®
+4. í™˜ê²½ë³„ resource ë¶„ë¦¬
  1) gradle.properties
-  profile ¼³Á¤ °ª
+  profile ì„¤ì • ê°’
  2) build.gradle
-  profile ¼³Á¤¿¡ µû¸¥ resources ·Îµù
+  profile ì„¤ì •ì— ë”°ë¥¸ resources ë¡œë”©
   resources-local / resources-dev / resources-prod
 
-5. API ¹®¼­È­ ¹× Å×½ºÆ®
- 1) Swagger API ÇÁ·¹ÀÓ¿öÅ©
+5. API ë¬¸ì„œí™” ë° í…ŒìŠ¤íŠ¸
+ 1) Swagger API í”„ë ˆì„ì›Œí¬
   http://localhost:9000/swagger-ui.html
- 2) Swagger ¼³Á¤ ºó µî·Ï
+ 2) Swagger ì„¤ì • ë¹ˆ ë“±ë¡
   @Profile({ "local", "dev" })
 
-6. ÆÛ½Ã½ºÅÏ½º ÇÁ·¹ÀÓ¿öÅ© MyBatis
- Mapper ÀÎÅÍÆäÀÌ½º + XML ¹æ½Ä »ç¿ë
- 1) Mapper ÀÎÅÍÆäÀÌ½º 
+6. í¼ì‹œìŠ¤í„´ìŠ¤ í”„ë ˆì„ì›Œí¬ MyBatis
+ Mapper ì¸í„°í˜ì´ìŠ¤ + XML ë°©ì‹ ì‚¬ìš©
+ 1) Mapper ì¸í„°í˜ì´ìŠ¤ 
   *Dao.java 	ex) CardPointDao.java
  2) XML 
   *Mapper.xml	ex) cardPointMapper.xml
 
-7. ÆĞÅ°Áö Á¤Ã¥ Layer ¹× Layer º° Á¢¹Ì¾î
+7. íŒ¨í‚¤ì§€ ì •ì±… Layer ë° Layer ë³„ ì ‘ë¯¸ì–´
  1) com.sjkim.advice
-  ÄÁÆ®·Ñ·¯ ¾îµå¹ÙÀÌ½º
+  ì»¨íŠ¸ë¡¤ëŸ¬ ì–´ë“œë°”ì´ìŠ¤
    Advice Class : *Advice
     GlobalExceptionAdvice.java, GlobalResponseAdvice.java
 
  2) com.sjkim.annotation
-  Ä¿½ºÅÒ ¾î³ëÅ×ÀÌ¼Ç
+  ì»¤ìŠ¤í…€ ì–´ë…¸í…Œì´ì…˜
    Loggable.java
 
  3) com.sjkim.aspect
-  ½ºÇÁ¸µ AOP
+  ìŠ¤í”„ë§ AOP
    LoggerAspect.java  
 
  4) com.sjkim.base
-  Super Å¬·¡½º 
+  Super í´ë˜ìŠ¤ 
    BaseObject.java, AbstractDto.java, AbstractVo.java
 
  5) com.sjkim.common
-  °øÅë ÆÄÀÏ
+  ê³µí†µ íŒŒì¼
    LogLevel.java, LogType.java
 
  6) com.sjkim.config
-  ½º¿ş°Å ¼³Á¤
+  ìŠ¤ì›¨ê±° ì„¤ì •
    SwaggerConfig.java
-  ½ºÇÁ¸µ ¼³Á¤
+  ìŠ¤í”„ë§ ì„¤ì •
    WebMvcConfig.java
 
  7) com.sjkim.controller
-  ½ºÇÁ¸µ ÄÁÆ®·Ñ·¯
+  ìŠ¤í”„ë§ ì»¨íŠ¸ë¡¤ëŸ¬
    Controller Class : *RestController
     CardPointRestController.java, ErrorLogRestController.java
 
  8) com.sjkim.dto
-  ¸Ş¼Òµå º° DTO, Controller ¸Ş¼Òµå¸í ±âÁØ
+  ë©”ì†Œë“œ ë³„ DTO, Controller ë©”ì†Œë“œëª… ê¸°ì¤€
    DTO Class : *Dto
     GetCardPointDto.java, PostCardPointDto.java, PutCardPointDto.java, ErrorLogDto.java
 
  9) com.sjkim.exception
-  ¿¹¿Ü Á¤ÀÇ
+  ì˜ˆì™¸ ì •ì˜
    Exception Class : *Exception
     CardPointNotFoundException.java
 
  10) com.sjkim.filter
-  ÇÊÅÍ Á¤ÀÇ
+  í•„í„° ì •ì˜
    XssFilter.java
    RequestWrapper.java
 
  11) com.sjkim.interceptor
-  ÀÎÅÍ¼ÁÅÍ Á¤ÀÇ
+  ì¸í„°ì…‰í„° ì •ì˜
    Interceptor Class : *Interceptor
     LoggerInterceptor.java, MybatisPagingInterceptor.java
 
@@ -157,14 +157,14 @@ VALUES ('11', 0.005);
     CardPointDao.java, ErrorLogDao.java
 
  13) com.sjkim.service
-  ¼­ºñ½º Layer
+  ì„œë¹„ìŠ¤ Layer
    Service Interface : *Service
     CardPointService.java
    Service Implementation : *ServiceImpl
     CardPointServiceImpl.java
 
  14) com.sjkim.vo
-  µ¥ÀÌÅÍ º° VO
+  ë°ì´í„° ë³„ VO
    VO Class : *Vo
     CardPointVo.java, ErrorLogVo.java, MessageVo.java
 
@@ -176,29 +176,29 @@ VALUES ('11', 0.005);
    MyBatis Config : *MapConfig
     restapiMapConfig.xml
 
-8. ¸Ş¼Òµå ³×ÀÌ¹Ö ·ê
+8. ë©”ì†Œë“œ ë„¤ì´ë° ë£°
  1) DAO
-  ¸Ş¼Òµå ¸í : insert* / select* / update* / delete*
+  ë©”ì†Œë“œ ëª… : insert* / select* / update* / delete*
 
  2) Service
-  ¸Ş¼Òµå ¸í : add* / find* / modify* / remove*
+  ë©”ì†Œë“œ ëª… : add* / find* / modify* / remove*
 
  3) Controller
-  ¸Ş¼Òµå ¸í : post* / get* / put* / delete*
+  ë©”ì†Œë“œ ëª… : post* / get* / put* / delete*
 
 9. Logging
- LogBack -> logback-spring.xml(È¯°æº° resources ºĞ¸®)
- 1) WAS ·Î±×
-  ÆÄÀÏ ·Î±ë -> restapi.log
+ LogBack -> logback-spring.xml(í™˜ê²½ë³„ resources ë¶„ë¦¬)
+ 1) WAS ë¡œê·¸
+  íŒŒì¼ ë¡œê¹… -> restapi.log
 
- 2) HTTP ¿äÃ»/Ã³¸® ·Î±×
-  ÆÄÀÏ ·Î±ë -> restapi-httptrace.log
+ 2) HTTP ìš”ì²­/ì²˜ë¦¬ ë¡œê·¸
+  íŒŒì¼ ë¡œê¹… -> restapi-httptrace.log
   LoggerInterceptor
 
- 3) ¿¡·¯ ·Î±×
-  DB ·Î±ë -> SYS_SELLER_ERROR_LOG Å×ÀÌºí
-  LoggerAspect -> Spring AOP + AspectJ Æ÷ÀÎÆ®ÄÆ(@Loggable)
-  ErrorLogRestController -> ¿¡·¯ ·Î±× Á¶È¸, http://localhost:9000/errorlogs
+ 3) ì—ëŸ¬ ë¡œê·¸
+  DB ë¡œê¹… -> SYS_SELLER_ERROR_LOG í…Œì´ë¸”
+  LoggerAspect -> Spring AOP + AspectJ í¬ì¸íŠ¸ì»·(@Loggable)
+  ErrorLogRestController -> ì—ëŸ¬ ë¡œê·¸ ì¡°íšŒ, http://localhost:9000/errorlogs
  
 CREATE TABLE SYS_SELLER_ERROR_LOG
 (
@@ -208,69 +208,69 @@ CREATE TABLE SYS_SELLER_ERROR_LOG
 	PRIMARY KEY (ERR_SQ)
 );
 
-COMMENT ON TABLE SYS_SELLER_ERROR_LOG IS 'SELLERAPI ¿¡·¯ ·Î±ë';
-COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_SQ IS '¿¡·¯ ½ÃÄö½º¹øÈ£';
-COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_DT IS '¿¡·¯ ¹ß»ıÀÏ½Ã';
-COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_CD IS '¿¡·¯ ÄÚµå';
+COMMENT ON TABLE SYS_SELLER_ERROR_LOG IS 'SELLERAPI ì—ëŸ¬ ë¡œê¹…';
+COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_SQ IS 'ì—ëŸ¬ ì‹œí€€ìŠ¤ë²ˆí˜¸';
+COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_DT IS 'ì—ëŸ¬ ë°œìƒì¼ì‹œ';
+COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_CD IS 'ì—ëŸ¬ ì½”ë“œ';
 
 CREATE SEQUENCE SEQ_SELLER_ERROR;
 
-10. Å×½ºÆ® ÀÚµ¿È­
- 1) ´ÜÀ§Å×½ºÆ® ÇÁ·¹ÀÓ¿öÅ©
+10. í…ŒìŠ¤íŠ¸ ìë™í™”
+ 1) ë‹¨ìœ„í…ŒìŠ¤íŠ¸ í”„ë ˆì„ì›Œí¬
   JUnit, Mockito
 
- 2) Repository / Service / Controller º° JUnit Å×½ºÆ®
-  Repository -> DB Å×½ºÆ® ÈÄ ÀÚµ¿ ·Ñ¹é ¼³Á¤
-  Controller -> MockMvc »ç¿ë
+ 2) Repository / Service / Controller ë³„ JUnit í…ŒìŠ¤íŠ¸
+  Repository -> DB í…ŒìŠ¤íŠ¸ í›„ ìë™ ë¡¤ë°± ì„¤ì •
+  Controller -> MockMvc ì‚¬ìš©
 
-11. ÀÀ´ä Message Å¸ÀÔ
- 1) MessageVO Å¸ÀÔ Á¤ÀÇ
+11. ì‘ë‹µ Message íƒ€ì…
+ 1) MessageVO íƒ€ì… ì •ì˜
   httpStatus / rowCount / contents
 
- 2) Á¤»ó ÄÉÀÌ½º Ã³¸® ControllerAdvice
+ 2) ì •ìƒ ì¼€ì´ìŠ¤ ì²˜ë¦¬ ControllerAdvice
   GlobalResponseAdvice
 
- 3) ¿¡·¯ ÄÉÀÌ½º Ã³¸® ControllerAdvice
+ 3) ì—ëŸ¬ ì¼€ì´ìŠ¤ ì²˜ë¦¬ ControllerAdvice
   GlobalExceptionAdvice
 
-12. Paging Àü¿ª Ã³¸®
- 1) Mybatis ÀÎÅÍ¼ÁÅÍ¸¦ »ç¿ë
+12. Paging ì „ì—­ ì²˜ë¦¬
+ 1) Mybatis ì¸í„°ì…‰í„°ë¥¼ ì‚¬ìš©
   MybatisPagingInterceptor
 
- 2) ÆäÀÌÂ¡
-  Oracle RowNum »ç¿ë
+ 2) í˜ì´ì§•
+  Oracle RowNum ì‚¬ìš©
 
-13. Æ®·£Àè¼Ç Ã³¸®
- 1) ½ºÇÁ¸µ ¼±¾ğÀû Æ®·£Àè¼Ç
-  Service ±¸Çö Å¬·¡½º -> @Transactional
+13. íŠ¸ëœì­ì…˜ ì²˜ë¦¬
+ 1) ìŠ¤í”„ë§ ì„ ì–¸ì  íŠ¸ëœì­ì…˜
+  Service êµ¬í˜„ í´ë˜ìŠ¤ -> @Transactional
 
- 2) Æ®·£Àè¼Ç Ã³¸® ·ê
-  Á¶È¸ Service ¸Ş¼Òµå -> @Transactional(readOnly = true) »ç¿ë
-  DB ·Î±ë ¸Ş¼Òµå -> @Transactional(propagation = Propagation.REQUIRES_NEW) »ç¿ë
+ 2) íŠ¸ëœì­ì…˜ ì²˜ë¦¬ ë£°
+  ì¡°íšŒ Service ë©”ì†Œë“œ -> @Transactional(readOnly = true) ì‚¬ìš©
+  DB ë¡œê¹… ë©”ì†Œë“œ -> @Transactional(propagation = Propagation.REQUIRES_NEW) ì‚¬ìš©
 
-14. Ä³½Ã
- 1) ½ºÇÁ¸µ Ä³½Ã Ãß»óÈ­
-  Service ±¸Çö Å¬·¡½º -> @Cacheable
+14. ìºì‹œ
+ 1) ìŠ¤í”„ë§ ìºì‹œ ì¶”ìƒí™”
+  Service êµ¬í˜„ í´ë˜ìŠ¤ -> @Cacheable
 
- 2) Ä³½Ã ³×ÀÌ¹Ö ·ê
-  Ä³½Ã Name : ¸®ÅÏ VO¸í			
-  Ä³½Ã Key : ¸Ş¼Òµå ¸í + #ÆÄ¶ó¹ÌÅÍ¸í
+ 2) ìºì‹œ ë„¤ì´ë° ë£°
+  ìºì‹œ Name : ë¦¬í„´ VOëª…			
+  ìºì‹œ Key : ë©”ì†Œë“œ ëª… + #íŒŒë¼ë¯¸í„°ëª…
    @Cacheable(value = "CardPointVo", key = "'findCardPointByCardFraction' + #cardFraction")
    public CardPointVo findCardPointByCardFraction(String cardFraction)
 
- 3) ehcache Àû¿ë
+ 3) ehcache ì ìš©
   application.yml
-  ehcache.xml -> ehcache »ó¼¼ ¼³Á¤
+  ehcache.xml -> ehcache ìƒì„¸ ì„¤ì •
 
- 4) redis Àû¿ë
+ 4) redis ì ìš©
   application.yml
 
-15. ÇÊÅÍ
+15. í•„í„°
  1) Character Encoding Filter
-  UTF-8 ÀÎÄÚµù
-  application.yml ¼³Á¤
+  UTF-8 ì¸ì½”ë”©
+  application.yml ì„¤ì •
 
  2) XSS Filter
-  XssFilter.java -> RequestWrapper ¹æ½Ä »ç¿ë
-  lucy-xss-servlet-filter »ç¿ë °¡´É
+  XssFilter.java -> RequestWrapper ë°©ì‹ ì‚¬ìš©
+  lucy-xss-servlet-filter ì‚¬ìš© ê°€ëŠ¥
 
