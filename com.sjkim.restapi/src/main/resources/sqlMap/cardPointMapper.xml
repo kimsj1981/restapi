@@ -35,7 +35,7 @@
 		WHERE CARD_FRACTION=#{cardFraction}
 	</update>
 
-	<delete id="deleteCardPoint" parameterType="String">
+	<delete id="deleteCardPoint" parameterType="DeleteCardPointDto">
 		DELETE
 		FROM
 		SYS_CARD_POINT

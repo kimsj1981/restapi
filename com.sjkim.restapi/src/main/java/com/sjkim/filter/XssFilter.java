@@ -8,10 +8,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter(urlPatterns = "/*")
+//@WebFilter(urlPatterns = "/*")
 public class XssFilter implements Filter {
 
 	@Override
@@ -21,8 +20,7 @@ public class XssFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// Rest Api에는 XssFilter가 필요 업으므로 주석 처리
-//		chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
+		chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
 	}
 
 	@Override

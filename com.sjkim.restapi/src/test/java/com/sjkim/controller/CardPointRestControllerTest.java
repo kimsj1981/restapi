@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.google.gson.Gson;
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
@@ -111,10 +112,12 @@ public class CardPointRestControllerTest {
 
 	@Test
 	public void testDeleteCardPoint() throws Exception {
+		// given
+		DeleteCardPointDto deleteCardPointDto = new DeleteCardPointDto("9999");
 		// when
 		ResultActions result = mockMvc.perform(delete("/api/cardpoints/{cardFraction}", "9999")).andDo(print());
 		// then
 		result.andExpect(status().isNoContent());
-		verify(cardPointService).removeCardPoint("9999");
+		verify(cardPointService).removeCardPoint(deleteCardPointDto);
 	}
 }

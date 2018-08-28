@@ -2,6 +2,8 @@ package com.sjkim.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,23 +17,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sjkim.activemq.JmsSender;
+import com.sjkim.config.PropertyMessage;
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
 import com.sjkim.service.CardPointService;
+import com.sjkim.serviceexecutor.ServiceJob;
+import com.sjkim.util.BeanUtils;
 import com.sjkim.vo.CardPointVo;
 
 @RestController
 @RequestMapping("api/cardpoints")
 public class CardPointRestController {
 
+	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	PropertyMessage propertyMessage;
+
 	@Autowired
 	private CardPointService cardPointService;
+
+	@Autowired
+	private JmsSender jsmSender;
 
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Integer postCardPoint(@RequestBody PostCardPointDto postCardPointDto) {
-		return cardPointService.addCardPoint(postCardPointDto);
+		if (propertyMessage.isQueueUse()) {
+			ServiceJob serviceJob = new ServiceJob();
+			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setMethodName("addCardPoint");
+			serviceJob.setDto(postCardPointDto);
+			serviceJob.setInvokeBeanId("cardPointService");
+			jsmSender.send(serviceJob);
+			return Integer.valueOf(1);
+		} else {
+			return cardPointService.addCardPoint(postCardPointDto);
+		}
 	}
 
 	@GetMapping
@@ -50,13 +75,36 @@ public class CardPointRestController {
 
 	@PutMapping(value = "{cardFraction}")
 	public Integer putCardPoint(@PathVariable String cardFraction, @RequestBody PutCardPointDto putCardPointDto) {
-		putCardPointDto.setCardFraction(cardFraction);
-		return cardPointService.modifyCardPoint(putCardPointDto);
+		putCardPointDto.setCardFraction(cardFraction);	
+		if (propertyMessage.isQueueUse()) {
+			ServiceJob serviceJob = new ServiceJob();
+			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setMethodName("modifyCardPoint");
+			serviceJob.setDto(putCardPointDto);
+			serviceJob.setInvokeBeanId("cardPointService");
+			jsmSender.send(serviceJob);
+			return Integer.valueOf(1);
+		} else {
+			return cardPointService.modifyCardPoint(putCardPointDto);
+		}
 	}
 
 	@DeleteMapping(value = "{cardFraction}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public Integer deleteCardPoint(@PathVariable String cardFraction) {
-		return cardPointService.removeCardPoint(cardFraction);
+		DeleteCardPointDto deleteCardPointDto = new DeleteCardPointDto();
+		deleteCardPointDto.setCardFraction(cardFraction);
+		if (propertyMessage.isQueueUse()) {
+			ServiceJob serviceJob = new ServiceJob();
+			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setMethodName("removeCardPoint");
+			serviceJob.setDto(deleteCardPointDto);
+			serviceJob.setInvokeBeanId("cardPointService");
+			jsmSender.send(serviceJob);
+			return Integer.valueOf(1);
+		} else {
+			return cardPointService.removeCardPoint(deleteCardPointDto);
+		}
+		
 	}
 }

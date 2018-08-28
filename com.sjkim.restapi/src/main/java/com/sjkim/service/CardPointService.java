@@ -2,6 +2,7 @@ package com.sjkim.service;
 
 import java.util.List;
 
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
@@ -17,5 +18,5 @@ public interface CardPointService {
 
 	public Integer modifyCardPoint(PutCardPointDto putCardPointDto);
 
-	public Integer removeCardPoint(String cardFraction);
+	public Integer removeCardPoint(DeleteCardPointDto deleteCardPointDto);
 }

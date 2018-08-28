@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sjkim.RestapiApplication;
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
@@ -32,6 +33,7 @@ public class CardPointDaoTest {
 	GetCardPointDto getCardPointDto = new GetCardPointDto();
 	PostCardPointDto postCardPointDto = new PostCardPointDto("9999", new BigDecimal("0.99"));
 	PutCardPointDto putCardPointDto = new PutCardPointDto("9999", new BigDecimal("0"));
+	DeleteCardPointDto deleteCardPointDto = new DeleteCardPointDto("9999");
 
 	@Test
 	@Transactional
@@ -90,7 +92,7 @@ public class CardPointDaoTest {
 		// given
 		cardPointDao.insertCardPoint(postCardPointDto);
 		// when
-		cardPointDao.deleteCardPoint(postCardPointDto.getCardFraction());
+		cardPointDao.deleteCardPoint(deleteCardPointDto);
 		CardPointVo cardPointVo = cardPointDao.selectCardPointByCardFraction(postCardPointDto.getCardFraction());
 		// then
 		assertNull(cardPointVo);

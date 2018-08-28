@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
@@ -33,6 +34,7 @@ public class CardPointServiceImplTest {
 	GetCardPointDto getCardPointDto = new GetCardPointDto();
 	PostCardPointDto postCardPointDto = new PostCardPointDto("9999", new BigDecimal("0.99"));
 	PutCardPointDto putCardPointDto = new PutCardPointDto("9999", new BigDecimal("0"));
+	DeleteCardPointDto deleteCardPointDto = new DeleteCardPointDto("9999");
 
 	@Test
 	public void testAddCardPoint() {
@@ -89,9 +91,9 @@ public class CardPointServiceImplTest {
 	@Test
 	public void testRemoveCardPoint() {
 		// given
-		when(cardPointDao.deleteCardPoint("9999")).thenReturn(1);
+		when(cardPointDao.deleteCardPoint(deleteCardPointDto)).thenReturn(1);
 		// when
-		int deleteCount = cardPointService.removeCardPoint("9999");
+		int deleteCount = cardPointService.removeCardPoint(deleteCardPointDto);
 		// then
 		assertEquals(1, deleteCount);
 	}
@@ -99,8 +101,8 @@ public class CardPointServiceImplTest {
 	@Test(expected = CardPointNotFoundException.class)
 	public void testRemoveCardPoint_CardPointNotFoundException() {
 		// given
-		when(cardPointDao.deleteCardPoint("9999")).thenReturn(0);
+		when(cardPointDao.deleteCardPoint(deleteCardPointDto)).thenReturn(0);
 		// when
-		cardPointService.removeCardPoint("9999");
+		cardPointService.removeCardPoint(deleteCardPointDto);
 	}
 }

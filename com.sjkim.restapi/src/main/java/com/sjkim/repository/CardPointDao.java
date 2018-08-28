@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.sjkim.dto.DeleteCardPointDto;
 import com.sjkim.dto.GetCardPointDto;
 import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
@@ -22,5 +23,5 @@ public interface CardPointDao {
 
 	int updateCardPoint(PutCardPointDto putCardPointDto);
 
-	int deleteCardPoint(String cardFraction);
+	int deleteCardPoint(DeleteCardPointDto deleteCardPointDto);
 }

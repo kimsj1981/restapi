@@ -36,10 +36,10 @@ public class LoggerAspect {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("logLevel : " + logLevel + ", logType : " + logType);
-			logger.debug("isWritable : " + getIsWritable(logLevel));
+			logger.debug("isWritable : " + isWritable(logLevel));
 		}
 
-		if (getIsWritable(logLevel)) {
+		if (isWritable(logLevel)) {
 			switch (logType) {
 			case SELLER:
 				ErrorLogDto errorLogDto = new ErrorLogDto();
@@ -53,7 +53,7 @@ public class LoggerAspect {
 		}
 	}
 
-	private Boolean getIsWritable(LogLevel logLevel) {
+	private Boolean isWritable(LogLevel logLevel) {
 		Boolean isWritable = Boolean.FALSE;
 		switch (logLevel) {
 		case TRACE:
