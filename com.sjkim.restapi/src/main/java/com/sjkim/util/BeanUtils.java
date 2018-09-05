@@ -16,11 +16,4 @@ public class BeanUtils {
 		}
 		return applicationContext.getBean(beanId);
 	}
-
-	public static String getClassName(Object object) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("original className : " + object.getClass().getName());
-		}
-		return object.getClass().getName().split("\\$")[0];
-	}
 }

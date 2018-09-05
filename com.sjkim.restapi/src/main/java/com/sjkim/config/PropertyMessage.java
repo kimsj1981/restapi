@@ -15,10 +15,10 @@ public class PropertyMessage {
 	@Autowired
 	ReloadableResourceBundleMessageSource messageSource;
 		
-	public Boolean isQueueUse() {
-		Boolean queueUse = Boolean.valueOf(messageSource.getMessage("queue.use", new Object[0], new Locale("en")));
+	public Boolean isQueueEnabled() {
+		Boolean queueUse = Boolean.valueOf(messageSource.getMessage("queue.enabled", new Object[0], new Locale("en")));
 		if (logger.isDebugEnabled()) {
-			logger.debug("queueUse : " + queueUse);
+			logger.debug("queueEnabled : " + queueUse);
 		}
 		return queueUse;
 	}

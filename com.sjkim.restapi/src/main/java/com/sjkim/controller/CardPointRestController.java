@@ -2,10 +2,9 @@ package com.sjkim.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +24,11 @@ import com.sjkim.dto.PostCardPointDto;
 import com.sjkim.dto.PutCardPointDto;
 import com.sjkim.service.CardPointService;
 import com.sjkim.serviceexecutor.ServiceJob;
-import com.sjkim.util.BeanUtils;
 import com.sjkim.vo.CardPointVo;
 
 @RestController
 @RequestMapping("api/cardpoints")
 public class CardPointRestController {
-
-	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	PropertyMessage propertyMessage;
@@ -46,9 +42,9 @@ public class CardPointRestController {
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Integer postCardPoint(@RequestBody PostCardPointDto postCardPointDto) {
-		if (propertyMessage.isQueueUse()) {
+		if (propertyMessage.isQueueEnabled()) {
 			ServiceJob serviceJob = new ServiceJob();
-			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setServiceName(ClassUtils.getUserClass(cardPointService).getName());
 			serviceJob.setMethodName("addCardPoint");
 			serviceJob.setDto(postCardPointDto);
 			serviceJob.setInvokeBeanId("cardPointService");
@@ -76,9 +72,9 @@ public class CardPointRestController {
 	@PutMapping(value = "{cardFraction}")
 	public Integer putCardPoint(@PathVariable String cardFraction, @RequestBody PutCardPointDto putCardPointDto) {
 		putCardPointDto.setCardFraction(cardFraction);	
-		if (propertyMessage.isQueueUse()) {
+		if (propertyMessage.isQueueEnabled()) {
 			ServiceJob serviceJob = new ServiceJob();
-			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setServiceName(ClassUtils.getUserClass(cardPointService).getName());
 			serviceJob.setMethodName("modifyCardPoint");
 			serviceJob.setDto(putCardPointDto);
 			serviceJob.setInvokeBeanId("cardPointService");
@@ -94,9 +90,9 @@ public class CardPointRestController {
 	public Integer deleteCardPoint(@PathVariable String cardFraction) {
 		DeleteCardPointDto deleteCardPointDto = new DeleteCardPointDto();
 		deleteCardPointDto.setCardFraction(cardFraction);
-		if (propertyMessage.isQueueUse()) {
+		if (propertyMessage.isQueueEnabled()) {
 			ServiceJob serviceJob = new ServiceJob();
-			serviceJob.setServiceName(BeanUtils.getClassName(cardPointService));
+			serviceJob.setServiceName(ClassUtils.getUserClass(cardPointService).getName());
 			serviceJob.setMethodName("removeCardPoint");
 			serviceJob.setDto(deleteCardPointDto);
 			serviceJob.setInvokeBeanId("cardPointService");
@@ -105,6 +101,5 @@ public class CardPointRestController {
 		} else {
 			return cardPointService.removeCardPoint(deleteCardPointDto);
 		}
-		
 	}
 }
