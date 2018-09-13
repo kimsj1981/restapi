@@ -14,21 +14,23 @@
  2) git
   https://github.com/kimsj1981/restapi.git
 
-3. H2 DB 설정
- 1) datasource 설정
-spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:  
+3. 테스트 DB 접속 설정
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@10.10.40.111:1661:GMOTST1
+spring.datasource.username=STYLE2
+spring.datasource.password=STYLE2
 
- 2) console 사용 설정 -> http://localhost:8080/h2-console
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+4. H2 DB 설정
+ 1) datasource 설정
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+ 
+ 2) console 사용 설정 
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+-> http://localhost:8080/h2-console
 
  3) schema.sql
 CREATE TABLE IF NOT EXISTS SYS_CARD_POINT
@@ -78,105 +80,130 @@ INSERT
 INTO SYS_CARD_POINT(CARD_FRACTION, APP_PERCENT)
 VALUES ('11', 0.005);
 
-4. 환경별 resource 분리
+5. 환경별 resource 분리
  1) gradle.properties
   profile 설정 값
  2) build.gradle
   profile 설정에 따른 resources 로딩
   resources-local / resources-dev / resources-prod
 
-5. API 문서화 및 테스트
+6. API 문서화 및 테스트
  1) Swagger API 프레임워크
   http://localhost:9000/swagger-ui.html
  2) Swagger 설정 빈 등록
   @Profile({ "local", "dev" })
 
-6. 퍼시스턴스 프레임워크 MyBatis
+7. 퍼시스턴스 프레임워크 MyBatis
  Mapper 인터페이스 + XML 방식 사용
  1) Mapper 인터페이스 
   *Dao.java 	ex) CardPointDao.java
  2) XML 
   *Mapper.xml	ex) cardPointMapper.xml
 
-7. 패키지 정책 Layer 및 Layer 별 접미어
- 1) com.sjkim.advice
+8. 패키지 정책 Layer 및 Layer 별 접미어
+ 1) com.sjkim.activemq
+  ActiveMQ 연동
+   JmsMessageConverter.java
+   JmsReceiverConfig.java, JmsSenderConfig.java
+   JmsReceiver.java, JmsSender.java
+
+ 2) com.sjkim.advice
   컨트롤러 어드바이스
    Advice Class : *Advice
     GlobalExceptionAdvice.java, GlobalResponseAdvice.java
 
- 2) com.sjkim.annotation
+ 3) com.sjkim.annotation
   커스텀 어노테이션
    Loggable.java
 
- 3) com.sjkim.aspect
+ 4) com.sjkim.aspect
   스프링 AOP
-   LoggerAspect.java  
+   LoggerAspect.java
 
- 4) com.sjkim.base
+ 5) com.sjkim.base
   Super 클래스 
    BaseObject.java, AbstractDto.java, AbstractVo.java
 
- 5) com.sjkim.common
+ 6) com.sjkim.common
   공통 파일
    LogLevel.java, LogType.java
 
- 6) com.sjkim.config
+ 7) com.sjkim.config
   스웨거 설정
    SwaggerConfig.java
   스프링 설정
    WebMvcConfig.java
+  MessageSource 설정
+   MessageConfig.java
+   PropertyMessage.java
 
- 7) com.sjkim.controller
+ 8) com.sjkim.controller
   스프링 컨트롤러
    Controller Class : *RestController
     CardPointRestController.java, ErrorLogRestController.java
 
- 8) com.sjkim.dto
+ 9) com.sjkim.dto
   메소드 별 DTO, Controller 메소드명 기준
    DTO Class : *Dto
-    GetCardPointDto.java, PostCardPointDto.java, PutCardPointDto.java, ErrorLogDto.java
+    DeleteCardPointDto.java, GetCardPointDto.java, PostCardPointDto.java, PutCardPointDto.java, ErrorLogDto.java
 
- 9) com.sjkim.exception
+ 10) com.sjkim.exception
   예외 정의
    Exception Class : *Exception
     CardPointNotFoundException.java
 
- 10) com.sjkim.filter
+ 11) com.sjkim.filter
   필터 정의
    XssFilter.java
    RequestWrapper.java
 
- 11) com.sjkim.interceptor
+ 12) com.sjkim.interceptor
   인터셉터 정의
    Interceptor Class : *Interceptor
     LoggerInterceptor.java, MybatisPagingInterceptor.java
 
- 12) com.sjkim.repository
+ 13) com.sjkim.repository
   Persistence Layer
    DAO Interface : *Dao
     CardPointDao.java, ErrorLogDao.java
 
- 13) com.sjkim.service
+ 14) com.sjkim.security
+  HTTP Basic 인증
+   SecurityConfig.java
+   SellerApiBasicAuthEntryPoint.java
+
+ 15) com.sjkim.service
   서비스 Layer
    Service Interface : *Service
-    CardPointService.java
+    CardPointService.java, ErrorLogService.java
    Service Implementation : *ServiceImpl
-    CardPointServiceImpl.java
+    CardPointServiceImpl.java, CardPointServiceImpl.java
+ 
+ 16) com.sjkim.serviceexecutor
+  MessageQueue 연동
+   ServiceExecutor.java
+   ServiceJob.java
 
- 14) com.sjkim.vo
+ 17) com.sjkim.util
+  유틸리티
+   ApplicationContextProvider.java
+   BeanUtils.java
+   SerializationUtils.java
+
+ 18) com.sjkim.vo
   데이터 별 VO
    VO Class : *Vo
-    CardPointVo.java, ErrorLogVo.java, MessageVo.java
+    CardPointVo.java, ErrorLogVo.java, MessageVo.java, MessageVoBuilder.java
 
- 15) sqlMap (src/main/resource)
+ 19) sqlMap (src/main/resource)
    MyBatis Mapper : *Mapper
     cardPointMapper.xml, errorLogMapper.xml
 
- 16) sqlMapConfig (src/main/resource)
+ 20) sqlMapConfig (src/main/resource)
    MyBatis Config : *MapConfig
     restapiMapConfig.xml
 
-8. 메소드 네이밍 룰
+9. 메소드 네이밍 룰
  1) DAO
   메소드 명 : insert* / select* / update* / delete*
 
@@ -186,7 +213,7 @@ VALUES ('11', 0.005);
  3) Controller
   메소드 명 : post* / get* / put* / delete*
 
-9. Logging
+10. Logging
  LogBack -> logback-spring.xml(환경별 resources 분리)
  1) WAS 로그
   파일 로깅 -> restapi.log
@@ -215,7 +242,7 @@ COMMENT ON COLUMN SYS_SELLER_ERROR_LOG.ERR_CD IS '에러 코드';
 
 CREATE SEQUENCE SEQ_SELLER_ERROR;
 
-10. 테스트 자동화
+11. 테스트 자동화
  1) 단위테스트 프레임워크
   JUnit, Mockito
 
@@ -223,24 +250,21 @@ CREATE SEQUENCE SEQ_SELLER_ERROR;
   Repository -> DB 테스트 후 자동 롤백 설정
   Controller -> MockMvc 사용
 
-11. 응답 Message 타입
+12. 응답 Message 타입
  1) MessageVO 타입 정의
   httpStatus / rowCount / contents
 
- 2) 정상 케이스 처리 ControllerAdvice
-  GlobalResponseAdvice
+ 2) 정상 케이스 처리 
+  GlobalResponseAdvice -> @ControllerAdvice + ResponseBodyAdvice 구현
 
- 3) 에러 케이스 처리 ControllerAdvice
-  GlobalExceptionAdvice
+ 3) 에러 케이스 처리 
+  GlobalExceptionAdvice -> @ControllerAdvice + @ExceptionHandler
 
-12. Paging 전역 처리
- 1) Mybatis 인터셉터를 사용
-  MybatisPagingInterceptor
+13. Paging 전역 처리
+ 1) Mybatis 인터셉터
+  MybatisPagingInterceptor -> 페이징을 위한 RowNum 추가
 
- 2) 페이징
-  Oracle RowNum 사용
-
-13. 트랜잭션 처리
+14. 트랜잭션 처리
  1) 스프링 선언적 트랜잭션
   Service 구현 클래스 -> @Transactional
 
@@ -248,7 +272,7 @@ CREATE SEQUENCE SEQ_SELLER_ERROR;
   조회 Service 메소드 -> @Transactional(readOnly = true) 사용
   DB 로깅 메소드 -> @Transactional(propagation = Propagation.REQUIRES_NEW) 사용
 
-14. 캐시
+15. 캐시
  1) 스프링 캐시 추상화
   Service 구현 클래스 -> @Cacheable
 
@@ -259,18 +283,39 @@ CREATE SEQUENCE SEQ_SELLER_ERROR;
    public CardPointVo findCardPointByCardFraction(String cardFraction)
 
  3) ehcache 적용
-  application.yml
+  application.properties
   ehcache.xml -> ehcache 상세 설정
 
  4) redis 적용
-  application.yml
+  application.properties
 
-15. 필터
+16. 필터
  1) Character Encoding Filter
   UTF-8 인코딩
-  application.yml 설정
+  application.properties
 
  2) XSS Filter
   XssFilter.java -> RequestWrapper 방식 사용
-  lucy-xss-servlet-filter 사용 가능
+  -> API 서버에는 사용 안함
 
+17. Message Queue
+ 1) ActiveMQ 적용
+  application.properties -> jms 설정, activemq 설정
+  http://localhost:8161/admin/queues.jsp
+
+ 2) Message Queue 연동
+  ServiceJob.java
+  ServiceExecutor.java
+
+ 3) Message Queue Enabled 설정 동적 로딩
+  application.properties -> queue.enabled
+  스프링 MessageResource를 사용한 동적 로딩
+
+18. 인증
+ 1) HTTP Basic Authentication
+  API Key(ID + Password) 인증
+  HTTP Authorization 헤더, Base64 인코딩/디코딩
+
+ curl -X GET "http://localhost:9000/api/cardpoints?startRowNum=0&endRowNum=10" -H "accept: */*"
+ curl -X GET "http://localhost:9000/api/cardpoints?startRowNum=0&endRowNum=10" -H "accept: */*" -H "Authorization: Basic cmVzdGFwaTphc2RmMTIzNA=="
+ 

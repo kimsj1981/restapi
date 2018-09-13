@@ -1,4 +1,4 @@
-package com.sjkim.auth;
+package com.sjkim.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public RestApiBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
-		return new RestApiBasicAuthenticationEntryPoint();
+	public RestApiBasicAuthEntryPoint getBasicAuthEntryPoint() {
+		return new RestApiBasicAuthEntryPoint();
 	}
 
 	@Autowired

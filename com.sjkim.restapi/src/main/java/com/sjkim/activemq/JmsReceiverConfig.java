@@ -16,6 +16,9 @@ public class JmsReceiverConfig {
 	@Value("${spring.activemq.broker-url}")
 	private String brokerUrl;
 	
+	@Value("${queue.concurrency}")
+	private String queueConcurrency;
+	
 	@Autowired
 	private MessageConverter messageConverter;
 
@@ -31,7 +34,7 @@ public class JmsReceiverConfig {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		factory.setConnectionFactory(activeMQConnectionFactory());
 		factory.setMessageConverter(messageConverter);
-		factory.setConcurrency("1-1");
+		factory.setConcurrency(queueConcurrency);
 		return factory;
 	}
 
