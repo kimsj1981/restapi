@@ -10,17 +10,17 @@
 	<insert id="insertErrorLog" parameterType="ErrorLogDto">
 		<selectKey keyProperty="errSq" resultType="BigDecimal"
 			order="BEFORE">
-			SELECT SEQ_REST_ERROR.nextval FROM DUAL
+			SELECT SEQ_RESTAPI_ERROR.nextval FROM DUAL
 		</selectKey>
 		INSERT
 		INTO
-		SYS_REST_ERROR_LOG(ERR_SQ, ERR_DT, ERR_CD)
+		SYS_RESTAPI_ERROR_LOG(ERR_SQ, ERR_DT, ERR_CD)
 		VALUES(#{errSq}, #{errDt}, #{errCd})
 	</insert>
 
 	<select id="selectErrorLogAll" resultMap="resultMapErrorLogVo">
 		SELECT *
 		FROM
-		SYS_REST_ERROR_LOG
+		SYS_RESTAPI_ERROR_LOG
 	</select>
 </mapper>
