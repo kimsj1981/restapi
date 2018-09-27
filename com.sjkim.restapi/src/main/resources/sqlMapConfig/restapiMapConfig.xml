@@ -4,6 +4,7 @@
 	<typeAliases>
 		<package name="com.sjkim.dto" />
 		<package name="com.sjkim.vo" />
+		<package name="com.sjkim.security" />
 	</typeAliases>
 
 	<plugins>
@@ -14,6 +15,7 @@
 	<mappers>
 		<mapper resource="sqlMap/cardPointMapper.xml" />
 		<mapper resource="sqlMap/errorLogMapper.xml" />
+		<mapper resource="sqlMap/userMapper.xml" />
 	</mappers>
 
 </configuration>
