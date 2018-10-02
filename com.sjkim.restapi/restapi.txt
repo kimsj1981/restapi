@@ -383,4 +383,5 @@ INSERT
 INTO SYS_RESTAPI_AUTHORITY(USER_NAME, ROLE)
 VALUES ('restapi', 'USER');
 
+curl -X GET "http://localhost:9000/api/cardpoints?startRowNum=0&endRowNum=10" -H "accept: */*" -H "Authorization: Basic cmVzdGFwaToxMjM0"
 
