@@ -1,19 +1,16 @@
 package com.sjkim.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sjkim.base.AbstractVo;
 
 public class ErrorLogVo extends AbstractVo {
 
-	private static final long serialVersionUID = -3671975051832638734L;
+	private static final long serialVersionUID = 7929767757896854814L;
 
 	private BigDecimal errSq;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
-	private Date errDt;
+	private String errDt;
 
 	private String errCd;
 
@@ -25,14 +22,14 @@ public class ErrorLogVo extends AbstractVo {
 		this.errSq = errSq;
 	}
 
-	public Date getErrDt() {
+	public String getErrDt() {
 		return errDt;
 	}
 
-	public void setErrDt(Date errDt) {
+	public void setErrDt(String errDt) {
 		this.errDt = errDt;
 	}
-
+	
 	public String getErrCd() {
 		return errCd;
 	}

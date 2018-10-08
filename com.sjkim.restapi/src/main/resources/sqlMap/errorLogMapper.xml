@@ -19,7 +19,7 @@
 	</insert>
 
 	<select id="selectErrorLogAll" resultMap="resultMapErrorLogVo">
-		SELECT *
+		SELECT ERR_SQ, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') ERR_DT, ERR_CD
 		FROM
 		SYS_RESTAPI_ERROR_LOG
 	</select>
