@@ -385,3 +385,11 @@ VALUES ('restapi', 'USER');
 
 curl -X GET "http://localhost:9000/api/cardpoints?startRowNum=0&endRowNum=10" -H "accept: */*" -H "Authorization: Basic cmVzdGFwaToxMjM0"
 
+19. To-Do-List
+ 1) Validation 체크
+  Spring Validation
+ 2) API 호출량 제어
+ 3) 성능 테스트
+ 4) Service Job Status 관리
+  Service Job ID 생성, Status 관리
+  Job Status 조회 컨트롤러
